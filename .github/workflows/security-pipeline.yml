@@ -1,0 +1,40 @@
+name: DevSecOps Security Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: |
+        docker build -t juice-shop:${{ github.sha }} .
+    
+    - name: Save Docker image
+      run: |
+        docker save juice-shop:${{ github.sha }} > juice-shop.tar
+    
+    - name: Upload image artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-image
+        path: juice-shop.tar
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Placeholder for security scans
+      run: echo "Security scans will go here"
