@@ -12,7 +12,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Build Docker image
       run: |
@@ -23,7 +23,7 @@ jobs:
         docker save juice-shop:${{ github.sha }} > juice-shop.tar
     
     - name: Upload image artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: docker-image
         path: juice-shop.tar
@@ -34,7 +34,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Placeholder for security scans
       run: echo "Security scans will go here"
